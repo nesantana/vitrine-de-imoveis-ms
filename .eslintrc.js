@@ -1,0 +1,40 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    'airbnb-base',
+  ],
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  plugins: [
+    '@typescript-eslint',
+  ],
+  rules: {
+    indent: 2,
+    'linebreak-style': 'off',
+    'import/prefer-default-export': 'off',
+    'react/function-component-definition': 'off',
+    'react/jsx-filename-extension': 'off',
+    'react/no-unstable-nested-components': 'off',
+    'import/no-unresolved': 'off',
+    semi: ['error', 'never'],
+    '@typescript-eslint/semi': ['error', 'never'],
+    'import/extensions': 'off',
+    camelcase: 'off',
+    'no-unused-vars': 'off',
+    'react/jsx-no-constructed-context-values': 'off',
+    'react/require-default-props': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/no-array-index-key': 'off',
+    'global-require': 'off',
+    'no-use-before-define': 'off',
+    'react/jsx-no-useless-fragment': 'off',
+    'no-underscore-dangle': 'off',
+    'no-async-promise-executor': 'off',
+  },
+}
