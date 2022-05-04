@@ -36,5 +36,6 @@ module.exports = {
     'react/jsx-no-useless-fragment': 'off',
     'no-underscore-dangle': 'off',
     'no-async-promise-executor': 'off',
+    'consistent-return': 'off',
   },
 }

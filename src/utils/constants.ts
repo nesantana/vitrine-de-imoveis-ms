@@ -33,4 +33,5 @@ export const Credentials = {
     user: 'levvei.delivery@gmail.com',
     pass: 'new@levvei.gmail',
   },
+  secret: 'dml0cmluZWRlaW1vdmVpcy5jb20uYnI=',
 }

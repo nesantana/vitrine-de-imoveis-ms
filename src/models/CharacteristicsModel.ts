@@ -1,24 +1,19 @@
 import { DataTypes } from 'sequelize'
 import db from '../db'
 
-const Customers = db.define('customers', {
+const Characteristics = db.define('characteristics', {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  name: {
+  value: {
     type: DataTypes.STRING,
     allowNull: true,
-  },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: true,
-    primaryKey: true,
   },
 })
 
-Customers.sync({ alter: true })
+Characteristics.sync({ alter: true })
 
-export default Customers
+export default Characteristics
