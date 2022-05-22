@@ -7,6 +7,8 @@ import CharacteristicsRoutes from '@routes/CharacteristicsRoutes'
 import ContactsRoutes from '@routes/ContactsRoutes'
 import UtilsRoutes from '@routes/UtilsRoutes'
 import KeepRegisterRoutes from '@routes/KeepRegisterRoutes'
+import AdvertiseRoutes from '@routes/AdvertiseRoutes'
+import FinancingRoutes from '@routes/FinancingRoutes'
 
 import cors from 'cors'
 
@@ -28,6 +30,8 @@ app.use('/characteristics', CharacteristicsRoutes)
 app.use('/contacts', ContactsRoutes)
 app.use('/utils', UtilsRoutes)
 app.use('/verificar-email', KeepRegisterRoutes)
+app.use('/advertise', AdvertiseRoutes)
+app.use('/financing', FinancingRoutes)
 
 server.listen(21291, () => {
   console.log('App Rodando: http://localhost:21291')
