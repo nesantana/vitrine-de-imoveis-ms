@@ -19,7 +19,19 @@ router.get('/', verifyJWT, async (req: any, res) => {
   }
 })
 
-router.post('/create', verifyJWT, async (req, res) => {
+router.get('/unread', verifyJWT, async (req: any, res) => {
+  const { userId } = req
+
+  try {
+    const contacts = await ContactsModel.findAll({ where: { id_professional: userId, read: '0' } })
+
+    res.send(contacts)
+  } catch (error) {
+    res.status(500).json({ error: `Opss, algo deu errado enquanto buscávamos os contatos : ${error}` })
+  }
+})
+
+router.post('/create', async (req, res) => {
   const {
     title_propertie,
     id_properties,

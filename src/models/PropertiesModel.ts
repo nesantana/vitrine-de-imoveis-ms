@@ -16,6 +16,10 @@ const Properties = db.define('properties', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  type: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   purpose: {
     type: DataTypes.STRING,
     allowNull: true,
@@ -44,8 +48,8 @@ const Properties = db.define('properties', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  embed_address: {
-    type: DataTypes.STRING,
+  coordinates: {
+    type: DataTypes.TEXT('long'),
     allowNull: true,
   },
   informations: {
@@ -57,7 +61,7 @@ const Properties = db.define('properties', {
     allowNull: true,
   },
   photos: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT('long'),
     allowNull: true,
   },
   views: {

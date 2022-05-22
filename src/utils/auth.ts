@@ -13,7 +13,7 @@ export const verifyJWT = (req: any, res: any, next: any) => {
     const user = await UsersModel.findOne({ where: { id: decoded.id } })
 
     if (!Number(parseInfo(user).access)) {
-      return res.status(401).json({ auth: false, message: 'Usuário pendente de pagamento.' })
+      req.pendding = true
     }
 
     req.userId = decoded.id

@@ -4,6 +4,7 @@ import { parseInfo } from '@utils/parseInfo'
 import jwt from 'jsonwebtoken'
 import { Credentials } from '@utils/constants'
 import { verifyJWT } from '@utils/auth'
+import { upload } from '@utils/upload'
 
 const router = Router()
 
@@ -18,6 +19,36 @@ router.get('/', verifyJWT, async (req, res) => {
     res.send(users)
   } catch (error) {
     res.status(500).json({ error: `Não conseguimos buscar os usuários agora, erro: ${error}` })
+  }
+})
+
+router.get('/find-me', verifyJWT, async (req: any, res) => {
+  try {
+    const users = await UsersModel.findOne({ where: { id: req.userId } })
+
+    res.send({ ...parseInfo(users), pendding: req.pendding })
+  } catch (error) {
+    res.status(500).json({ error: 'Não conseguimos buscar seus dados' })
+  }
+})
+
+router.get('/find-username', async (req: any, res) => {
+  const { username } = req.query
+  try {
+    const user = await UsersModel.findOne({ where: { username } })
+
+    const userParse = parseInfo(user)
+
+    delete userParse.password
+    delete userParse.access
+    delete userParse.last_payment
+    delete userParse.is_admin
+    delete userParse.createdAt
+    delete userParse.updatedAt
+
+    res.send(userParse)
+  } catch (error) {
+    res.status(500).json({ error: 'Não conseguímos validar' })
   }
 })
 
@@ -66,7 +97,7 @@ router.post('/login', async (req, res) => {
     })
     return res.json({ auth: true, token })
   } catch (error) {
-    return res.status(500).json({ error: `Não conseguimos validar esse usuário agora, erro: ${error}` })
+    return res.status(500).json({ error: 'Não conseguimos validar esse usuário agora' })
   }
 })
 
@@ -75,6 +106,7 @@ router.post('/create', async (req, res) => {
     name,
     username,
     email,
+    phone,
     password,
     confirm_password,
     document,
@@ -95,24 +127,9 @@ router.post('/create', async (req, res) => {
     message.push('O campo "Nome" é obrigatório')
   }
 
-  if (!username) {
-    canKeep = false
-    message.push('O campo "Nome de Usuário" é obrigatório')
-  }
-
   if (!email) {
     canKeep = false
     message.push('O campo "E-mail" é obrigatório')
-  }
-
-  if (!document) {
-    canKeep = false
-    message.push('O campo "CPF/CNPJ" é obrigatório')
-  }
-
-  if (!professional_document) {
-    canKeep = false
-    message.push('O campo "CRECI" é obrigatório')
   }
 
   if (!password) {
@@ -153,6 +170,7 @@ router.post('/create', async (req, res) => {
         document,
         zipcode,
         street,
+        phone,
         neighborhood,
         number,
         complement,
@@ -177,6 +195,7 @@ router.post('/edit', async (req, res) => {
     name,
     username,
     email,
+    phone,
     document,
     zipcode,
     street,
@@ -207,7 +226,7 @@ router.post('/edit', async (req, res) => {
     if (email) {
       const findEmail = await UsersModel.findOne({ where: { email } })
 
-      if (findEmail) {
+      if (findEmail && parseInfo(findEmail).id !== id) {
         return res.status(500).json({ error: 'E-mail já utilizado na plataforma.' })
       }
     }
@@ -216,7 +235,7 @@ router.post('/edit', async (req, res) => {
       if (username) {
         const findUsername = await UsersModel.findOne({ where: { username } })
 
-        if (findUsername) {
+        if (findUsername && parseInfo(findUsername).id !== id) {
           return res.status(500).json({ error: 'Apelido já utilizado na plataforma.' })
         }
       }
@@ -234,6 +253,10 @@ router.post('/edit', async (req, res) => {
 
         if (complement) {
           params.complement = complement
+        }
+
+        if (phone) {
+          params.phone = phone
         }
 
         if (number) {
@@ -288,6 +311,25 @@ router.post('/edit', async (req, res) => {
     }
   } catch (error) {
     return res.status(500).json({ error: `Não conseguimos atualizar esse usuário agora, erro: ${error}` })
+  }
+})
+
+router.post('/upload', verifyJWT, upload.single('photo'), async (req, res) => {
+  const { id } = req.body
+
+  if (!id) {
+    return res.status(500).json({ error: 'Informar o ID do usuário é necessário.' })
+  }
+
+  try {
+    await UsersModel.update(
+      { photo: req.file.filename },
+      { where: { id } },
+    )
+
+    return res.send('Cadastro atualizado com sucesso.')
+  } catch (error) {
+    res.status(500).json({ error: `Erro ao tentar atualizar o cadastro: ${error}` })
   }
 })
 

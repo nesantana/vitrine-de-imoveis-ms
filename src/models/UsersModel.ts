@@ -16,6 +16,10 @@ const Users = db.define('users', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  phone: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   email: {
     type: DataTypes.STRING,
     allowNull: true,
