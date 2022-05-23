@@ -11,28 +11,19 @@ import AdvertiseRoutes from '@routes/AdvertiseRoutes'
 import FinancingRoutes from '@routes/FinancingRoutes'
 
 import cors from 'cors'
+import path from 'path'
 
 const app = express()
 const server = http.createServer(app)
 
-app.use(
-  cors({
-    origin: true,
-    optionsSuccessStatus: 200,
-    credentials: true,
-  }),
-)
-app.options(
-  '*',
-  cors({
-    origin: true,
-    optionsSuccessStatus: 200,
-    credentials: true,
-  }),
-)
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200,
+}
 
+app.use(cors(corsOptions))
 app.use(express.json())
-app.use('/uploads', express.static('../uploads'))
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 
 app.use('/users', UsersRoutes)
 app.use('/properties', PropertiesRoutes)
