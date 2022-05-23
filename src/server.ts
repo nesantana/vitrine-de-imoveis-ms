@@ -15,12 +15,22 @@ import cors from 'cors'
 const app = express()
 const server = http.createServer(app)
 
-const corsOptions = {
-  origin: '*',
-  optionsSuccessStatus: 200,
-}
+app.use(
+  cors({
+    origin: true,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  }),
+)
+app.options(
+  '*',
+  cors({
+    origin: true,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  }),
+)
 
-app.use(cors(corsOptions))
 app.use(express.json())
 app.use('/uploads', express.static('uploads'))
 
