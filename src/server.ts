@@ -32,7 +32,7 @@ app.options(
 )
 
 app.use(express.json())
-app.use('/uploads', express.static('uploads'))
+app.use('/uploads', express.static('../uploads'))
 
 app.use('/users', UsersRoutes)
 app.use('/properties', PropertiesRoutes)
