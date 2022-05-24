@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import { Credentials } from '@utils/constants'
 import { verifyJWT } from '@utils/auth'
 import { upload } from '@utils/upload'
+import moment from 'moment'
 
 const router = Router()
 
@@ -330,6 +331,90 @@ router.post('/upload', verifyJWT, upload.single('photo'), async (req, res) => {
     return res.send('Cadastro atualizado com sucesso.')
   } catch (error) {
     res.status(500).json({ error: `Erro ao tentar atualizar o cadastro: ${error}` })
+  }
+})
+
+router.get('/due-date', verifyJWT, async (req: any, res) => {
+  try {
+    const user = await UsersModel.findOne({ where: { id: req.userId } })
+
+    if (Number(parseInfo(user).is_admin)) {
+      const users = await UsersModel.findAll()
+      const agora = moment().format('L')
+
+      const userParse = parseInfo(users)
+
+      const usersFilter = userParse.filter((u: any) => {
+        const myDate = moment(u.last_payment, 'DD/MM/YYYY')
+          .add(1, 'month')
+          .format('L')
+
+        return myDate < agora
+      })
+
+      return res.send(usersFilter)
+    }
+
+    return res.status(500).json({ error: 'Usuário não é Administrador.' })
+  } catch (error) {
+    return res.status(500).json({ error: 'Não conseguímos validar seu usuário' })
+  }
+})
+
+router.post('/remove-access/:id', verifyJWT, async (req: any, res) => {
+  const {
+    id,
+  } = req.params
+
+  try {
+    const user = await UsersModel.findOne({ where: { id: req.userId } })
+
+    if (Number(parseInfo(user).is_admin)) {
+      await UsersModel.update(
+        { access: '0' },
+        {
+          where: { id },
+        },
+      )
+
+      return res.send('Usuário bloqueado com sucesso!')
+    }
+
+    return res.status(500).json({ error: 'Usuário não é Administrador.' })
+  } catch (error) {
+    return res.status(500).json({ error: 'Não conseguímos validar seu usuário' })
+  }
+})
+
+router.post('/renew-access/:id', verifyJWT, async (req: any, res) => {
+  const {
+    id,
+  } = req.params
+
+  try {
+    const user = await UsersModel.findOne({ where: { id: req.userId } })
+
+    if (Number(parseInfo(user).is_admin)) {
+      const userToUpdate = await UsersModel.findOne({ where: { id } })
+
+      const newDueDate = moment(parseInfo(userToUpdate).last_payment, 'DD/MM/YYYY').add(1, 'month').format('DD/MM/YYYY')
+
+      await UsersModel.update(
+        {
+          access: '1',
+          last_payment: newDueDate,
+        },
+        {
+          where: { id },
+        },
+      )
+
+      return res.send('Usuário renovado com sucesso!')
+    }
+
+    return res.status(500).json({ error: 'Usuário não é Administrador.' })
+  } catch (error) {
+    return res.status(500).json({ error: 'Não conseguímos validar seu usuário' })
   }
 })
 
