@@ -341,8 +341,11 @@ router.post('/update/:id', verifyJWT, async (req: any, res) => {
     bedrooms,
     informations,
     bathrooms,
+    suite,
+    iptu,
     address,
     coordinates,
+    youtube,
   } = req.body
 
   const {
@@ -400,6 +403,18 @@ router.post('/update/:id', verifyJWT, async (req: any, res) => {
 
     if (coordinates) {
       params.coordinates = coordinates
+    }
+
+    if (youtube) {
+      params.youtube = youtube
+    }
+
+    if (iptu) {
+      params.iptu = iptu
+    }
+
+    if (suite) {
+      params.suite = suite
     }
 
     await PropertiesModel.update(

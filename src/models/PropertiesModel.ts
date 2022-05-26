@@ -68,6 +68,18 @@ const Properties = db.define('properties', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  suite: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  youtube: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  iptu: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
 })
 
 Properties.sync({ alter: true })

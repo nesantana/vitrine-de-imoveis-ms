@@ -53,6 +53,26 @@ router.get('/find-username', async (req: any, res) => {
   }
 })
 
+router.get('/find-id', async (req: any, res) => {
+  const { id } = req.query
+  try {
+    const user = await UsersModel.findOne({ where: { id } })
+
+    const userParse = parseInfo(user)
+
+    delete userParse.password
+    delete userParse.access
+    delete userParse.last_payment
+    delete userParse.is_admin
+    delete userParse.createdAt
+    delete userParse.updatedAt
+
+    res.send(userParse)
+  } catch (error) {
+    res.status(500).json({ error: 'Não conseguímos validar' })
+  }
+})
+
 router.post('/login', async (req, res) => {
   const {
     user,
