@@ -53,7 +53,7 @@ const Properties = db.define('properties', {
     allowNull: true,
   },
   informations: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT('long'),
     allowNull: true,
   },
   characteristics: {
