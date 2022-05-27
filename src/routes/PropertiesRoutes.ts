@@ -243,25 +243,15 @@ router.get('/:id', async (req: any, res) => {
 
 router.post('/create', verifyJWT, async (req: any, res) => {
   const {
-    value,
     purpose,
     title,
-    area,
     type,
-    area_build,
-    bedrooms,
-    bathrooms,
     address,
     coordinates,
   } = req.body
 
   let canKeep: boolean = true
   const message: string[] = []
-
-  if (!value) {
-    canKeep = false
-    message.push('O campo "Valor" é obrigatório')
-  }
 
   if (!purpose) {
     canKeep = false
@@ -276,26 +266,6 @@ router.post('/create', verifyJWT, async (req: any, res) => {
   if (!title) {
     canKeep = false
     message.push('O campo "Título" é obrigatório')
-  }
-
-  if (!area) {
-    canKeep = false
-    message.push('O campo "Área Total" é obrigatório')
-  }
-
-  if (!area_build) {
-    canKeep = false
-    message.push('O campo "Área Total Constrída" é obrigatório')
-  }
-
-  if (!bedrooms) {
-    canKeep = false
-    message.push('O campo "Quartos" é obrigatório')
-  }
-
-  if (!bathrooms) {
-    canKeep = false
-    message.push('O campo "Banheiros" é obrigatório')
   }
 
   if (!address) {
