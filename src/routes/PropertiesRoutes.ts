@@ -441,7 +441,7 @@ const createStringWithFilesname = (files: any) => {
   return text
 }
 
-router.post('/upload', upload.array('photos', 10), async (req, res) => {
+router.post('/upload', upload.array('photos', 30), async (req, res) => {
   const { id } = req.body
 
   if (!id) {
