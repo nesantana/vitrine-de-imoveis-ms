@@ -2,7 +2,7 @@ import { Router } from 'express'
 import UsersModel from '@models/UsersModel'
 import { parseInfo } from '@utils/parseInfo'
 import jwt from 'jsonwebtoken'
-import { Credentials } from '@utils/constants'
+import { Credentials } from '@utils/credentials'
 import { verifyJWT } from '@utils/auth'
 import { upload } from '@utils/upload'
 import moment from 'moment'
@@ -138,6 +138,9 @@ router.post('/create', async (req, res) => {
     complement,
     professional_document,
     photo,
+    facebook,
+    instagram,
+    youtube,
   } = req.body
 
   let canKeep: boolean = true
@@ -197,6 +200,9 @@ router.post('/create', async (req, res) => {
         complement,
         professional_document,
         photo,
+        facebook,
+        instagram,
+        youtube,
       }
 
       await UsersModel.create(params)

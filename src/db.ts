@@ -1,4 +1,4 @@
-import { Credentials } from '@utils/constants'
+import { Credentials } from '@utils/credentials'
 import { Sequelize } from 'sequelize'
 
 const connection = new Sequelize(Credentials.db.db, Credentials.db.user, Credentials.db.password, {

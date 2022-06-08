@@ -60,6 +60,18 @@ const Users = db.define('users', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  facebook: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  instagram: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  youtube: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   access: {
     type: DataTypes.STRING,
     allowNull: true,

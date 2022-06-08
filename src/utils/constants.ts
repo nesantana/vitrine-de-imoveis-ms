@@ -20,18 +20,3 @@ export const Constants = {
     far: 7,
   },
 }
-
-export const Credentials = {
-  db: {
-    user: 'levvei01',
-    db: 'levvei01',
-    password: 'PFKJZ3yxY5CLvAg',
-    host: 'mysql.levvei.com',
-    dialect: 'mysql',
-  },
-  email: {
-    user: 'levvei.delivery@gmail.com',
-    pass: 'new@levvei.gmail',
-  },
-  secret: 'dml0cmluZWRlaW1vdmVpcy5jb20uYnI=',
-}

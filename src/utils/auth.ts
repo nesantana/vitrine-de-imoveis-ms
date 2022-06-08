@@ -1,6 +1,6 @@
 import UsersModel from '@models/UsersModel'
 import jwt from 'jsonwebtoken'
-import { Credentials } from './constants'
+import { Credentials } from './credentials'
 import { parseInfo } from './parseInfo'
 
 export const verifyJWT = (req: any, res: any, next: any) => {
