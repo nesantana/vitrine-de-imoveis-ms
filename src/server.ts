@@ -12,6 +12,7 @@ import FinancingRoutes from '@routes/FinancingRoutes'
 
 import cors from 'cors'
 import path from 'path'
+import { port } from '@utils/credentials'
 
 const app = express()
 const server = http.createServer(app)
@@ -34,7 +35,7 @@ app.use('/verificar-email', KeepRegisterRoutes)
 app.use('/advertise', AdvertiseRoutes)
 app.use('/financing', FinancingRoutes)
 
-server.listen(21291, () => {
+server.listen(port, () => {
   console.log('App Rodando: http://localhost:21291')
 })
 
