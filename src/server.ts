@@ -36,7 +36,7 @@ app.use('/advertise', AdvertiseRoutes)
 app.use('/financing', FinancingRoutes)
 
 server.listen(port, () => {
-  console.log('App Rodando: http://localhost:21291')
+  console.log(`App Rodando: http://localhost:${port}`)
 })
 
 export { http }
